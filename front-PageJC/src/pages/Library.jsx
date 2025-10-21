@@ -55,7 +55,17 @@ export default function Library({ games: propGames = null, loading: propLoading 
         <p className="muted">No hay juegos registrados aún.</p>
       ) : (
         <div className="grid">
-          {games.map(g => <GameCard key={g.id} game={g} />)}
+          {games.map(g => (
+            <GameCard
+              key={g.id}
+              game={g}
+              onDelete={(id) => {
+                if (typeof propSetGames === 'function') {
+                  propSetGames(prev => prev.filter(game => game.id !== id));
+                }
+              }}
+            />
+          ))}
         </div>
       )}
 

@@ -30,15 +30,15 @@ export default function GameForm({ onSubmit, initial = null }) {
     }
 
     const newGame = {
-      id: uuidv4(),
+      id: initial?.id || uuidv4(), 
       title: title.trim(),
       platform: platform.trim(),
       coverUrl: coverUrl.trim() || null,
       releaseDate: releaseDate || null,
-      genres: [],
+      genres: initial?.genres || [],
       hoursPlayed: Number(hoursPlayed),
       score: Number(score),
-      createdAt: new Date().toISOString()
+      createdAt: initial?.createdAt || new Date().toISOString()
     };
 
     console.log('[GameForm] newGame prepared:', newGame);

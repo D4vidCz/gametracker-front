@@ -189,3 +189,12 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent);
 }
+
+.btn.danger {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+}
+.btn.danger:hover {
+  background-color: #b91c1c;
+}

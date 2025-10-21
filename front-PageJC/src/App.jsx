@@ -4,14 +4,16 @@ import Header from './components/Header';
 import Library from './pages/Library';
 import GameDetail from './pages/GameDetail';
 import AddGame from './pages/AddGame';
+import EditGame from './pages/EditGame'; // 👈 nuevo import
 import { fetchGames } from './api/games';
+
 function App() {
   const [games, setGames] = useState([]);
   const [loadingGames, setLoadingGames] = useState(true);
 
   useEffect(() => {
     fetchGames()
-      .then(g => setGames(g))
+      .then(g => setGames(g || []))
       .catch(() => setGames([]))
       .finally(() => setLoadingGames(false));
   }, []);
@@ -25,7 +27,7 @@ function App() {
             <Route path="/" element={<Library games={games} loading={loadingGames} setGames={setGames} />} />
             <Route path="/games/:id" element={<GameDetail />} />
             <Route path="/add" element={<AddGame setGames={setGames} />} />
-            {/* más rutas: /edit/:id, /stats */}
+            <Route path="/edit/:id" element={<EditGame games={games} setGames={setGames} />} /> {/* 👈 NUEVA RUTA */}
           </Routes>
         </main>
       </div>
