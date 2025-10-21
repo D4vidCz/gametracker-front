@@ -36,3 +36,10 @@ export async function fetchGameById(id) {
     }, 400);
   });
 }
+
+export async function createGameMock(game) {
+  // normalemente harías POST al backend; aquí devolvemos el objeto con un delay
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(game), 300);
+  });
+}
