@@ -1,78 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import GameCard from '../components/GameCard';
-import { fetchGames } from '../api/games';
+import React, { useEffect, useState } from "react";
+import { fetchGames, deleteGame } from "../api/games";
+import GameCard from "../components/GameCard";
 
-export default function Library({ games: propGames = null, loading: propLoading = null, setGames: propSetGames = null }) {
-
-  const [localGames, setLocalGames] = useState([]);
-  const [localLoading, setLocalLoading] = useState(true);
+export default function Library() {
+  const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
-  const isControlled = Array.isArray(propGames);
-
   useEffect(() => {
-    if (isControlled) {
-      
-      setLocalLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-    setLocalLoading(true);
     fetchGames()
-      .then(g => {
-        if (!cancelled) {
-          setLocalGames(g || []);
-        }
+      .then(data => {
+        setGames(data);
       })
-      .catch(err => {
-        console.error('[Library] fetchGames error:', err);
-        setError('No se pudo cargar juegos');
-      })
-      .finally(() => {
-        if (!cancelled) setLocalLoading(false);
-      });
+      .catch(() => setError("Error al cargar juegos"))
+      .finally(() => setLoading(false));
+  }, []);
 
-    return () => { cancelled = true; };
-  }, [isControlled]);
-
-  const games = isControlled ? propGames : localGames;
-  const loading = propLoading ?? localLoading;
-
-  useEffect(() => {
-    console.log('[Library] rendering - games count:', Array.isArray(games) ? games.length : 0);
-  }, [games]);
-
-  if (loading) return <p className="center">Cargando juegos...</p>;
-  if (error) return <p className="center error">{error}</p>;
+  if (loading) return <p>Cargando juegos...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <section className="library container">
       <h2>Mi Biblioteca</h2>
-
-      {(!Array.isArray(games) || games.length === 0) ? (
-        <p className="muted">No hay juegos registrados aún.</p>
+      {games.length === 0 ? (
+        <p>No hay juegos registrados aún.</p>
       ) : (
         <div className="grid">
           {games.map(g => (
             <GameCard
-              key={g.id}
+              key={g._id}
               game={g}
-              onDelete={(id) => {
-                if (typeof propSetGames === 'function') {
-                  propSetGames(prev => prev.filter(game => game.id !== id));
-                }
+              onDelete={async (id) => {
+                await deleteGame(id);
+                setGames(prev => prev.filter(x => x._id !== id));
               }}
             />
           ))}
         </div>
       )}
-
-      {/* DEBUG: ver contenido del array en la página (útil temporalmente) */}
-      {/* <pre style={{color:'white', marginTop:20}}>{JSON.stringify(games, null, 2)}</pre> */}
-
     </section>
   );
 }
-

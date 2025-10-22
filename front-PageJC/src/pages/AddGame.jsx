@@ -1,21 +1,19 @@
-import React from 'react';
-import GameForm from '../components/GameForm';
-import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { createGame } from "../api/games";
+import GameForm from "../components/GameForm";
 
-export default function AddGame({ setGames }) {
+export default function AddGame() {
   const navigate = useNavigate();
 
-  // handler que recibirá el formulario
-  function handleCreate(newGame) {
-    const gameWithId = { id: uuidv4(), ...newGame };
-    setGames(prev => [newGame, ...prev]); // agrega al inicio
-    navigate('/'); // volver a la biblioteca
+  async function handleCreate(newGame) {
+    await createGame(newGame);
+    navigate("/");
   }
 
   return (
-    <section className="container" style={{paddingTop: '1rem'}}>
-      <h2>Add a new game</h2>
+    <section className="container" style={{ paddingTop: "1rem" }}>
+      <h2>Agregar Nuevo Juego</h2>
       <GameForm onSubmit={handleCreate} />
     </section>
   );

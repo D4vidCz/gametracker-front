@@ -1,45 +1,33 @@
-export const MOCK_GAMES = [
-  {
-    id: '1',
-    title: 'The Legend of Zelda: Breath of the Wild',
-    coverUrl: 'https://assets.example/zelda.jpg',
-    platform: 'Switch',
-    releaseDate: '2017-03-03',
-    genres: ['Action', 'Adventure'],
-    hoursPlayed: 120,
-    score: 5
-  },
-  {
-    id: '2',
-    title: 'Hades',
-    coverUrl: 'https://assets.example/hades.jpg',
-    platform: 'PC',
-    releaseDate: '2020-09-17',
-    genres: ['Roguelike'],
-    hoursPlayed: 40,
-    score: 4
-  },
-];
+import axios from "axios";
 
+const API_URL = "http://localhost:4000/api/games";
+
+// Obtener todos los juegos
 export async function fetchGames() {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(MOCK_GAMES), 600);
-  });
+  const res = await axios.get(API_URL);
+  return res.data;
 }
 
+// Obtener un juego por ID
 export async function fetchGameById(id) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const g = MOCK_GAMES.find(x => x.id === id);
-      if (g) resolve(g);
-      else reject(new Error('Game not found'));
-    }, 400);
-  });
+  const res = await axios.get(`${API_URL}/${id}`);
+  return res.data;
 }
 
-export async function createGameMock(game) {
-  // normalemente harías POST al backend; aquí devolvemos el objeto con un delay
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(game), 300);
-  });
+// Crear un nuevo juego
+export async function createGame(game) {
+  const res = await axios.post(API_URL, game);
+  return res.data;
+}
+
+// Actualizar un juego
+export async function updateGame(id, game) {
+  const res = await axios.put(`${API_URL}/${id}`, game);
+  return res.data;
+}
+
+// Eliminar un juego
+export async function deleteGame(id) {
+  const res = await axios.delete(`${API_URL}/${id}`);
+  return res.data;
 }
