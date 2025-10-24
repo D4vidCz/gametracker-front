@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Library from './pages/Library';
 import GameDetail from './pages/GameDetail';
 import AddGame from './pages/AddGame';
-import EditGame from './pages/EditGame'; // 👈 nuevo import
+import EditGame from './pages/EditGame'; 
 import { fetchGames } from './api/games';
 
 function App() {
