@@ -9,6 +9,11 @@ export async function fetchReviewsByGame(gameId) {
   return res.data;
 }
 
+export async function fetchReviewStatsByGame(gameId) {
+  const res = await axios.get(`${API_URL}/stats/${gameId}`);
+  return res.data;
+}
+
 export async function createReview(review) {
   const res = await axios.post(API_URL, review);
   return res.data;

@@ -2,7 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchGameById } from "../api/games";
-import { fetchReviewsByGame, deleteReview, updateReview } from "../api/reviews";
+import { 
+  fetchReviewsByGame, 
+  deleteReview, 
+  updateReview, 
+  fetchReviewStatsByGame  
+} from "../api/reviews";
 import EditReview from "../components/EditReview"; 
 import AddReview from "../components/AddReview";
 
@@ -10,24 +15,30 @@ export default function GameDetail() {
   const { id } = useParams(); 
   const [game, setGame] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null); 
+  const [error, setError] = useState(null);
 
+  // Cargar juego, reseñas y estadísticas
   useEffect(() => {
     let canceled = false;
     async function loadData() {
       setLoading(true);
       try {
-        const [gameData, reviewsData] = await Promise.all([
+        const [gameData, reviewsData, statsData] = await Promise.all([
           fetchGameById(id),
-          fetchReviewsByGame(id)
+          fetchReviewsByGame(id),
+          fetchReviewStatsByGame(id)
         ]);
         if (!canceled) {
           setGame(gameData);
           setReviews(reviewsData || []);
+          setStats(statsData || null);
         }
       } catch (err) {
         console.error("Error cargando detalles/reseñas:", err);
+        setError("No se pudo cargar la información del juego.");
       } finally {
         if (!canceled) setLoading(false);
       }
@@ -42,10 +53,11 @@ export default function GameDetail() {
     try {
       setReviews(prev => prev.filter(r => (r._id || r.id) !== reviewId));
       await deleteReview(reviewId);
+      const updatedStats = await fetchReviewStatsByGame(id);
+      setStats(updatedStats);
     } catch (err) {
       console.error("Error al eliminar reseña:", err);
       alert("No se pudo eliminar la reseña. Reintentá.");
-
       try {
         const fresh = await fetchReviewsByGame(id);
         setReviews(fresh || []);
@@ -68,9 +80,13 @@ export default function GameDetail() {
   async function handleSaveEdit(reviewId, updatedData) {
     try {
       const updated = await updateReview(reviewId, updatedData);
-
       setReviews(prev => prev.map(r => ((r._id || r.id) === reviewId ? updated : r)));
       setEditingId(null);
+
+      // Actualizar estadísticas tras editar reseña
+      const updatedStats = await fetchReviewStatsByGame(id);
+      setStats(updatedStats);
+
     } catch (err) {
       console.error("Error actualizando reseña:", err);
       alert("No se pudo guardar la reseña editada.");
@@ -78,6 +94,7 @@ export default function GameDetail() {
   }
 
   if (loading) return <p>Cargando detalles...</p>;
+  if (error) return <p>{error}</p>;
   if (!game) return <p>No se encontró el juego.</p>;
 
   return (
@@ -85,8 +102,31 @@ export default function GameDetail() {
       <h2>{game.titulo || game.title}</h2>
       <p><strong>Género:</strong> {game.genero || game.genre}</p>
       <p><strong>Plataforma:</strong> {game.plataforma || game.platform}</p>
+      <p><strong>Año de lanzamiento:</strong> {game.añoLanzamiento || game.releaseYear}</p>
 
-      <h3>Reseñas</h3>
+      {/* 📊 SECCIÓN DE ESTADÍSTICAS */}
+      {stats && (
+        <div className="stats-grid" style={{ marginTop: "20px", marginBottom: "30px" }}>
+          <div className="stat-card">
+            <h3>⭐ Promedio de Puntuación</h3>
+            <p>{stats.promedioPuntuacion?.toFixed(1) || 0}</p>
+          </div>
+          <div className="stat-card">
+            <h3>💬 Total de Reseñas</h3>
+            <p>{stats.totalReviews}</p>
+          </div>
+          <div className="stat-card">
+            <h3>⏱️ Horas Jugadas</h3>
+            <p>{stats.totalHorasJugadas}</p>
+          </div>
+          <div className="stat-card">
+            <h3>👍 Recomendaciones</h3>
+            <p>{stats.recomendados}</p>
+          </div>
+        </div>
+      )}
+
+      <h3>📝 Reseñas</h3>
 
       {reviews.length === 0 ? (
         <p>No hay reseñas aún.</p>
@@ -124,13 +164,16 @@ export default function GameDetail() {
             );
           })}
         </ul>
-        
       )}
+
       <AddReview
         gameId={id}
-        onAdd={(newReview) => setReviews(prev => [...prev, newReview])}
+        onAdd={async (newReview) => {
+          setReviews(prev => [...prev, newReview]);
+          const updatedStats = await fetchReviewStatsByGame(id);
+          setStats(updatedStats);
+        }}
       />
-
     </section>
   );
 }

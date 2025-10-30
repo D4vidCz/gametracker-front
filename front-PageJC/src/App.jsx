@@ -6,6 +6,7 @@ import GameDetail from './pages/GameDetail';
 import AddGame from './pages/AddGame';
 import EditGame from './pages/EditGame'; 
 import { fetchGames } from './api/games';
+import Stats from "./pages/Stats";
 
 function App() {
   const [games, setGames] = useState([]);
@@ -28,6 +29,7 @@ function App() {
             <Route path="/games/:id" element={<GameDetail />} />
             <Route path="/add" element={<AddGame setGames={setGames} />} />
             <Route path="/edit/:id" element={<EditGame games={games} setGames={setGames} />} /> {/* 👈 NUEVA RUTA */}
+          <Route path="/stats" element={<Stats />} />
           </Routes>
         </main>
       </div>
