@@ -1,0 +1,199 @@
+/* 📄 GAME DETAIL PAGE */
+.game-detail {
+  background: linear-gradient(180deg, var(--bg), #0a1323);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.6s ease;
+}
+
+/* Título principal */
+.game-detail h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-detail p {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 0.2rem 0;
+  text-align: center;
+}
+
+.game-detail strong {
+  color: var(--text);
+}
+
+/* 🧩 SECCIÓN DE ESTADÍSTICAS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 6px 15px rgba(56, 189, 248, 0.25);
+}
+
+.stat-card h3 {
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* 📝 Reseñas */
+.game-detail h3 {
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+  padding-bottom: 0.3rem;
+}
+
+/* Lista de reseñas */
+.game-detail ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-detail li {
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.game-detail li:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.15);
+}
+
+/* Texto de reseña */
+.game-detail li p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.game-detail li strong {
+  color: var(--text);
+}
+
+/* Botones */
+.game-detail button {
+  background: var(--accent);
+  border: none;
+  color: #0f172a;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.game-detail button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.game-detail button[style*="red"] {
+  background: #dc2626;
+  color: white;
+}
+
+.game-detail button[style*="red"]:hover {
+  background: #b91c1c;
+}
+
+/* Formularios internos (AddReview / EditReview) */
+.form-review {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.form-review label {
+  color: var(--text);
+  font-weight: 600;
+  display: block;
+  margin-top: 0.8rem;
+}
+
+.form-review input,
+.form-review textarea,
+.form-review select {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-review input:focus,
+.form-review textarea:focus,
+.form-review select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-detail {
+    padding: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .game-detail h2 {
+    font-size: 1.6rem;
+  }
+}

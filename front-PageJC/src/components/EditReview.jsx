@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../styles/EditReview.css";
+
 
 export default function EditReview({ initial = {}, onCancel, onSave }) {
   const [form, setForm] = useState({
@@ -31,7 +33,8 @@ export default function EditReview({ initial = {}, onCancel, onSave }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ border: '1px dashed #ccc', padding: 8, borderRadius: 6 }}>
+    <form onSubmit={handleSubmit} className="edit-review">
+
       <label>Puntuación</label>
       <select value={form.puntuacion} onChange={e => setForm({ ...form, puntuacion: Number(e.target.value) })}>
         {[5,4,3,2,1].map(n => <option key={n} value={n}>{n} ⭐</option>)}
@@ -53,10 +56,13 @@ export default function EditReview({ initial = {}, onCancel, onSave }) {
         Recomendaría
       </label>
 
-      <div style={{ marginTop: 8 }}>
-        <button type="submit" disabled={saving}>{saving ? "Guardando..." : "Guardar"}</button>
-        <button type="button" onClick={onCancel} style={{ marginLeft: 8 }}>Cancelar</button>
-      </div>
+      <div className="actions">
+  <button type="submit" disabled={saving}>
+    {saving ? "Guardando..." : "Guardar"}
+  </button>
+  <button type="button" onClick={onCancel}>Cancelar</button>
+</div>
+
     </form>
   );
 }

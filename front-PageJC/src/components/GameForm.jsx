@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../styles/GameForm.css";
+
 
 export default function GameForm({ onSubmit, initial = {} }) {
   const [form, setForm] = useState({

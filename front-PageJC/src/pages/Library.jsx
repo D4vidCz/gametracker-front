@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchGames, deleteGame } from "../api/games";
 import GameCard from "../components/GameCard";
+import "../styles/Library.css";
+
 
 export default function Library() {
   const [games, setGames] = useState([]);

@@ -10,6 +10,8 @@ import {
 } from "../api/reviews";
 import EditReview from "../components/EditReview"; 
 import AddReview from "../components/AddReview";
+import "../styles/GameDetail.css";
+
 
 export default function GameDetail() {
   const { id } = useParams(); 

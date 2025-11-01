@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../styles/AddReview.css";
+
 
 export default function AddReview({ gameId, onAdd }) {
   const [form, setForm] = useState({
@@ -39,7 +41,7 @@ export default function AddReview({ gameId, onAdd }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ borderTop: "1px solid #ccc", marginTop: 20, paddingTop: 10 }}>
+    <form onSubmit={handleSubmit} className="add-review">
       <h4>Agregar reseña</h4>
 
       <label>Puntuación:</label>

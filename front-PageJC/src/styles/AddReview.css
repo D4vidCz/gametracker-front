@@ -1,0 +1,102 @@
+/* 🎮 FORMULARIO DE RESEÑAS */
+.add-review {
+  background: var(--card);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.6s ease;
+}
+
+.add-review h4 {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.25);
+  padding-bottom: 0.4rem;
+}
+
+.add-review label {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.add-review select,
+.add-review input[type="number"],
+.add-review textarea {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.add-review select:focus,
+.add-review input:focus,
+.add-review textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
+}
+
+.add-review textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* Checkbox */
+.add-review input[type="checkbox"] {
+  accent-color: var(--accent);
+  transform: scale(1.2);
+  margin-right: 0.4rem;
+}
+
+/* Botón */
+.add-review button {
+  background: var(--accent);
+  color: #0f172a;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  width: 100%;
+  transition: all 0.25s ease;
+}
+
+.add-review button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.add-review button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .add-review {
+    padding: 1rem;
+  }
+}
