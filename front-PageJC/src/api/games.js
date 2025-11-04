@@ -26,6 +26,17 @@ export async function updateGame(id, game) {
   return res.data;
 }
 
+export async function updateGameCompletado(id, completado) {
+  const res = await fetch(`http://localhost:4000/api/games/${id}/completado`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ completado })
+  });
+  if (!res.ok) throw new Error("Error al actualizar completado");
+  return res.json();
+}
+
+
 // Eliminar un juego
 export async function deleteGame(id) {
   const res = await axios.delete(`${API_URL}/${id}`);
