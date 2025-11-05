@@ -132,6 +132,50 @@
   background-color: #b91c1c;
 }
 
+/* 🎮 FILTROS - Biblioteca */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.filters input,
+.filters select {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.9rem;
+  transition: border 0.2s ease, background 0.2s ease;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.filters input {
+  flex: 1 1 180px;
+}
+
+.filters select {
+  flex: 0 1 140px;
+}
+
+/* 📦 Grilla */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.9rem;
+  justify-content: center;
+}
+
 /* ---------- ANIMACIONES ---------- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
